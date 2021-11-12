@@ -1,18 +1,20 @@
 import numpy as np
-import ipywidgets import interact, fixed
-import PIL  import Image
+from ipywidgets import interact, fixed
+from PIL  import Image
 
 def imshow(X, resize = None):
-    
+    ##resize is the basewith of the new picture
     img = Image.open(X)
     
+    if resize is None:
+        img.show()
+    else:
+        wpercent = (resize/float(img.size[0]))
+        hsize = int((float(img.size[1])*float(wpercent)))
+
+        img = img.resize((resize,hsize), Image.ANTIALIAS)
+
+        img.show()
     
-    wpercent = (resize/float(img.size[0]))
-    hsize = int((float(img.size[1])*float(wpercent)))
     
-    img = img.resize((basewidth,hsize), Image.ANTIALIAS)
-    
-    img.show()
-    
-    
-ipywidgets.interact(imshow, resize=(0,2000))
+interact(imshow, X= 'somepicture',resize=(0,1000))
